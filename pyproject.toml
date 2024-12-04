@@ -14,9 +14,10 @@ tasssktracker = "tasssktracker.__main__:main"
 python = "^3.12"
 click = "^8.1"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.test.dependencies]
 pytest = "^8.3"
 pytest-click = "^1.1.0"
+pylint-pytest =  "^1.1.8"
 
 [build-system]
 requires = ["poetry-core"]
