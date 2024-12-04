@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "tasssktracker"
+version = "0.1.0"
+description = "A basic task tracking cli tool"
+authors = ["Joshua Bowery"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "tasssktracker"}]
+
+[tool.poetry.scripts]
+tasssktracker = "tasssktracker.__main__:main"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+click = "^8.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^8.3"
+pytest-click = "^1.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
