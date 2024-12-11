@@ -60,3 +60,31 @@ def test_get_dict_list_returns_dict_list(mocker):
     # Assert that each item in the list is a dictionary
     for item in dl:
         assert isinstance(item, dict), f"Item {item} should be a dictionary"
+
+def test_update_changes_value_per_field(mocker):
+    # Mock Task objects with task_id and description attributes
+    task_mock1 = mocker.MagicMock()(spec=Task)
+    task_mock2 = mocker.MagicMock()(spec=Task)
+    task_mock3 = mocker.MagicMock()(spec=Task)
+    
+    task_mock1.task_id = 1
+    task_mock1.description = 'Old description 1'
+    
+    task_mock2.task_id = 2
+    task_mock2.description = 'Old description 2'
+    
+    task_mock3.task_id = 3
+    task_mock3.description = 'Old description 3'
+    
+    tasks = [task_mock1, task_mock2, task_mock3]
+
+    # Create TaskList with mocked tasks
+    tl = TaskList(tasks)
+
+    # Update the description of the task with task_id 2
+    success = tl.update(2, 'description', 'my_new_desc')
+
+    # Assert that the task's description has been updated
+    task_mock2.description = 'my_new_desc'
+    assert tl._task_list[1].description == 'my_new_desc', f"Expected description to be 'my_new_desc', but got {tl._task_list[1].description}"
+    assert success
