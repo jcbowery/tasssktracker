@@ -1,6 +1,5 @@
 """Module for tasklist object"""
 
-from datetime import datetime
 from typing import Any, Dict, List
 
 from tasssktracker.tasssktracker.task import Task
@@ -50,11 +49,24 @@ class TaskList:
                     success = True
         return success
 
+    def delete(self, task_id: int) -> bool:
+        """deletes task from tasklist
+
+        Args:
+            task_id (int)
+
+        Returns:
+            bool: indicates if task deleted
+        """
+        success = False
+        for task in self._task_list:
+            if task.task_id == task_id:
+                self._task_list.remove(task)
+                success = True
+        return success
+
     def _generate_next_id(self):
         task_id = 0
         for task in self._task_list:
             task_id = max(task_id, task.task_id)
         return task_id + 1
-
-    def _get_current_time(self):
-        return datetime.now()
