@@ -31,6 +31,25 @@ class TaskList:
             dict_list.append(task.to_dict())
         return dict_list
 
+    def update(self, task_id: int, field: str, value: Any) -> bool:
+        """Update a task in the tasklist. Return True if task updated
+
+        Args:
+            task_id (int): _description_
+            field (str): _description_
+            value (Any): _description_
+
+        Returns:
+            bool: indicates if task updated
+        """
+        success = False
+        for task in self._task_list:
+            if task.task_id == task_id:
+                if hasattr(task, field):
+                    setattr(task, field, value)
+                    success = True
+        return success
+
     def _generate_next_id(self):
         task_id = 0
         for task in self._task_list:
