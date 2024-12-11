@@ -18,6 +18,7 @@ click = "^8.1"
 pytest = "^8.3"
 pytest-click = "^1.1.0"
 pylint-pytest =  "^1.1.0"
+pytest-mock = "^3.14.0"
 
 [build-system]
 requires = ["poetry-core"]
