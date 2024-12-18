@@ -1,13 +1,21 @@
 """Module for tasklist object"""
 
 from typing import Any, Dict, List
+from datetime import datetime
 
-from tasssktracker.tasssktracker.task import Task, Status
+from tasssktracker.tasssktracker.task import Task, Status, map_json_dict_to_task
 
 class TaskList:
     """Handling tasklist items"""
     def __init__(self, task_list: List[Task]):
         self._task_list = task_list
+
+    def __str__(self) -> str:
+        """Return a string representation of the task list"""
+        if not self._task_list:
+            return "No tasks available."
+        tasks = [str(task) for task in self._task_list]
+        return "\n".join(tasks)
 
     def add(self, description):
         """add a new task to tasklist via a description
@@ -41,11 +49,13 @@ class TaskList:
         Returns:
             bool: indicates if task updated
         """
+        time = self._get_current_time()
         success = False
         for task in self._task_list:
             if task.task_id == task_id:
                 if hasattr(task, field):
                     setattr(task, field, value)
+                    setattr(task, 'updated_at', time)
                     success = True
         return success
 
@@ -72,7 +82,7 @@ class TaskList:
             List[Task]
         """
         completed = filter(lambda x: x.status == Status.DONE, self._task_list)
-        return list(completed)
+        return TaskList(completed)
 
     def get_not_completed(self) -> List[Task]:
         """return list of not completed tasks
@@ -81,7 +91,7 @@ class TaskList:
             List[Task]
         """
         not_completed = filter(lambda x: x.status != Status.DONE, self._task_list)
-        return list(not_completed)
+        return TaskList(not_completed)
 
     def get_in_progress(self) -> List[Task]:
         """return tasks in progress
@@ -90,10 +100,19 @@ class TaskList:
             List[Task]
         """
         in_progress = filter(lambda x: x.status == Status.IN_PROGRESS, self._task_list)
-        return list(in_progress)
+        return TaskList(in_progress)
 
     def _generate_next_id(self):
         task_id = 0
         for task in self._task_list:
             task_id = max(task_id, task.task_id)
         return task_id + 1
+
+    def _get_current_time(self):
+        return datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
+
+def create_task_list(task_dict: dict):
+        tasks = []
+        for item in task_dict:
+            tasks.append(map_json_dict_to_task(item))
+        return TaskList(tasks)

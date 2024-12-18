@@ -11,7 +11,7 @@ class Status(Enum):
     """Status enum"""
 
     TODO = "todo"
-    IN_PROGRESS = "in-progress"
+    IN_PROGRESS = "in_progress"
     DONE = "done"
 
 
@@ -35,6 +35,16 @@ class Task:
             self.created_at = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
         if not self.updated_at:
             self.updated_at = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
+
+    def __str__(self):
+        return (
+            f"Task ID: {self.task_id}\n"
+            f"Description: {self.description}\n"
+            f"Status: {self.status.name}\n"
+            f"Created At: {self.created_at}\n"
+            f"Updated At: {self.updated_at}\n"
+            "--------------------------------------"
+        )
 
     def to_dict(self) -> Dict[str, Any]:
         """Returns the object as a dictionary

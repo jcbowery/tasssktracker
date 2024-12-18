@@ -189,21 +189,6 @@ pluggy = ">=1.5,<2"
 dev = ["argcomplete", "attrs (>=19.2)", "hypothesis (>=3.56)", "mock", "pygments (>=2.7.2)", "requests", "setuptools", "xmlschema"]
 
 [[package]]
-name = "pytest-click"
-version = "1.1.0"
-description = "Pytest plugin for Click"
-optional = false
-python-versions = "*"
-files = [
-    {file = "pytest_click-1.1.0-py3-none-any.whl", hash = "sha256:eade4742c2f02c345e78a32534a43e8db04acf98d415090539dacc880b7cd0e9"},
-    {file = "pytest_click-1.1.0.tar.gz", hash = "sha256:fdd9f6721f877dda021e7c5dc73e70aecd37e5ed23ec6820f8a7b3fd7b4f8d30"},
-]
-
-[package.dependencies]
-click = ">=6.0"
-pytest = ">=5.0"
-
-[[package]]
 name = "pytest-mock"
 version = "3.14.0"
 description = "Thin-wrapper around the mock package for easier use with pytest"
@@ -234,4 +219,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "10f1b2bd836b15674ca2cce2435f190a35b23697f547e29a4af664d9c17a6f25"
+content-hash = "7b676fe75e18eb9d92363d8243e62e0dbedcd335cc0e32bfc539914690c980f8"
