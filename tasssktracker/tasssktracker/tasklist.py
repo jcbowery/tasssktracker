@@ -2,7 +2,7 @@
 
 from typing import Any, Dict, List
 
-from tasssktracker.tasssktracker.task import Task
+from tasssktracker.tasssktracker.task import Task, Status
 
 class TaskList:
     """Handling tasklist items"""
@@ -64,6 +64,33 @@ class TaskList:
                 self._task_list.remove(task)
                 success = True
         return success
+
+    def get_completed(self) -> List[Task]:
+        """return list of completed tasks
+
+        Returns:
+            List[Task]
+        """
+        completed = filter(lambda x: x.status == Status.DONE, self._task_list)
+        return list(completed)
+
+    def get_not_completed(self) -> List[Task]:
+        """return list of not completed tasks
+
+        Returns:
+            List[Task]
+        """
+        not_completed = filter(lambda x: x.status != Status.DONE, self._task_list)
+        return list(not_completed)
+
+    def get_in_progress(self) -> List[Task]:
+        """return tasks in progress
+
+        Returns:
+            List[Task]
+        """
+        in_progress = filter(lambda x: x.status == Status.IN_PROGRESS, self._task_list)
+        return list(in_progress)
 
     def _generate_next_id(self):
         task_id = 0
