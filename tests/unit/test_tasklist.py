@@ -1,4 +1,4 @@
-from tasssktracker.tasssktracker.task import Task
+from tasssktracker.tasssktracker.task import Task, Status
 from tasssktracker.tasssktracker.tasklist import TaskList
 from typing import List, Dict, Any
 
@@ -113,3 +113,75 @@ def test_delete_removes_task(mocker):
 
     assert success
     assert task_mock2 not in tl._task_list
+
+def test_list_completed(mocker):
+    # Mock Task objects with task_id and description attributes
+    task_mock1 = mocker.MagicMock()(spec=Task)
+    task_mock2 = mocker.MagicMock()(spec=Task)
+    task_mock3 = mocker.MagicMock()(spec=Task)
+    
+    task_mock1.task_id = 1
+    task_mock1.description = 'Old description 1'
+    
+    task_mock2.task_id = 2
+    task_mock2.description = 'Old description 2'
+    
+    task_mock3.task_id = 3
+    task_mock3.description = 'Old description 3'
+    task_mock3.status = Status.DONE
+
+    tl = TaskList([task_mock1, task_mock2, task_mock3])
+
+    completed = tl.get_completed()
+
+    assert len(completed) == 1
+    assert completed[0].task_id == 3
+
+def test_list_not_completed(mocker):
+    # Mock Task objects with task_id and description attributes
+    task_mock1 = mocker.MagicMock()(spec=Task)
+    task_mock2 = mocker.MagicMock()(spec=Task)
+    task_mock3 = mocker.MagicMock()(spec=Task)
+    
+    task_mock1.task_id = 1
+    task_mock1.description = 'Old description 1'
+    
+    task_mock2.task_id = 2
+    task_mock2.description = 'Old description 2'
+    
+    task_mock3.task_id = 3
+    task_mock3.description = 'Old description 3'
+    task_mock3.status = Status.DONE
+
+    tl = TaskList([task_mock1, task_mock2, task_mock3])
+
+    completed = tl.get_not_completed()
+
+    assert len(completed) == 2
+    assert completed[0].task_id == 1
+    assert completed[1].task_id == 2
+
+def test_list_in_progress(mocker):
+    # Mock Task objects with task_id and description attributes
+    task_mock1 = mocker.MagicMock()(spec=Task)
+    task_mock2 = mocker.MagicMock()(spec=Task)
+    task_mock3 = mocker.MagicMock()(spec=Task)
+    
+    task_mock1.task_id = 1
+    task_mock1.description = 'Old description 1'
+    
+    task_mock2.task_id = 2
+    task_mock2.description = 'Old description 2'
+    
+    task_mock3.task_id = 3
+    task_mock3.description = 'Old description 3'
+    task_mock3.status = Status.IN_PROGRESS
+
+    tl = TaskList([task_mock1, task_mock2, task_mock3])
+
+    completed = tl.get_in_progress()
+
+    assert len(completed) == 1
+    assert completed[0].task_id == 3
+    
+
